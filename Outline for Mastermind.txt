@@ -1,0 +1,66 @@
+// Mastermind
+
+class Board { // Model Class
+	
+	private int[] correctPattern;
+	private Guess[] guesses;
+	
+	public Board();
+	
+	public void setCorrectPattern(int[] pattern);
+	public int[] getCorrectPattern();
+	
+	public void checkGuess(int[] guessPattern); // set Independent
+	
+	public Guess[] getGuesses(); // get dependent
+	
+}
+
+class Guess {
+
+	int[] pattern;
+	int[] feedback;
+	
+	public Guess(int[] newPattern, int[] newFeedback);
+	
+	public void setPattern(int[] newPattern);
+	public int[] getPattern();
+	
+	public void setFeedback(int[] newFeedback);
+	public int[] getFeedback();
+	
+}
+
+class Player extends EventHandler<ActionEvent> { // Controller Class
+
+	private int buttonToModify; 
+
+	public void handle(Action event, Main main, Board board); // Read states of buttons
+	public void handle(String input, Main main, Board board); // for text-only version
+	public void setColor(Button button, Color color); 
+	
+}
+
+class Main { // View Class
+
+	private Player player;
+	private Board board;
+	
+	private button checkButton;
+	private button deleteButton;
+	private button newGameButton;
+	private button blue, green, orange, red, purple, yellow; // The color controls
+	private button guess1, guess2, guess3, guess4; // The guessing buttons
+
+	public static void main(String[] args);
+	public void start(Stage primaryStage);
+	
+	// ...
+	// getters for buttons
+	// ...
+	
+	public void reset();
+	public void update();
+	
+}
+
