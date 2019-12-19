@@ -1,9 +1,19 @@
-package finalProjectConsole;
+/**
+ * Driver.java - The driver for the console version of the mastermind game
+ * @author Aidan St. George
+ * @version 1.2.1 - 12/19/20
+ */
+
+package application;
 
 import java.util.Scanner;
 
 public class Driver {
 	
+	/**
+	 * The Main method for this class. Sets up the main interactions with the user.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		
@@ -23,27 +33,25 @@ public class Driver {
 			} while (players != 1 && players != 2);
 			
 			// Set Pattern
-			Board game = null;
+			Game game = null;
 			if (players == 1) {
-				game = new Board();
+				game = new Game();
 			} else {
 				do {
 					try {
 						char[] pattern = getUserPattern(scanner);
-						game = new Board(pattern);
+						game = new Game(pattern);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 					}
 				} while (game == null);
 			}
 			
-			int guessNumber = 0; // Number of guesses that the player is on, if 10 they lose
 			boolean win = false;
 			
 			// Guessing
-			while (!win && guessNumber < 10) {				
-				guessNumber++;
-				System.out.print("Guess #" + guessNumber + ", ");
+			while (!win && game.getCurrentGuessNumber() < 10) {
+				System.out.print("Guess #" + (game.getCurrentGuessNumber() + 1) + ", ");
 				
 				boolean validInput = false;
 				do {
@@ -59,7 +67,7 @@ public class Driver {
 				System.out.println("\t\t\t\tBlack: " + guess.getBlack() + ", White: " + guess.getWhite());
 			}
 			
-			System.out.println("Win: " + win + ", Score: " + (10 - guessNumber) + "\n");
+			System.out.println("Win: " + win + ", Score: " + (11 - game.getCurrentGuessNumber()) + "\n");
 			
 			// Check for restart
 			int action = -1;
@@ -82,6 +90,11 @@ public class Driver {
 		
 	}
 	
+	/**
+	 * Helper method that gets the users input for a pattern. Checks the validity of the pattern and if necessary asks for another pattern.
+	 * @param scanner the scanner that should be used, just to avoid having multiple scanners
+	 * @return the input pattern as an array of characters
+	 */
 	public static char[] getUserPattern(Scanner scanner) {
 		boolean validPattern = false;
 		char[] pattern;
